@@ -19,16 +19,16 @@ with open(os.path.join("data", "parameters.json"), "r") as pf:
 settings = Settings()
 parameters = Parameters(**prmt_json)
 
-processor = ChatDataProcessor(os.path.join("data", parameters.data_file_name))
+data_processor = ChatDataProcessor(os.path.join("data", parameters.data_file_name))
 validator = GPT_Validator(settings, parameters)
 
 
 if __name__ == "__main__":
     print(parameters.prompt)
-    processor.pipline()
+    data_processor.pipline()
     k = 1
-    for i in processor.dict_of_chats:
-        dialogue = "\n\t".join([str(d["Autor"]) + ": " + str(d["Phrase"]) for d in processor.dict_of_chats[i]])
+    for i in data_processor.dict_of_chats:
+        dialogue = "\n\t".join([str(d["Autor"]) + ": " + str(d["Phrase"]) for d in data_processor.dict_of_chats[i]])
         val = validator(dialogue)
         print(dialogue)
         print(val)
