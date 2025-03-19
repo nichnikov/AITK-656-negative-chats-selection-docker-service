@@ -80,8 +80,13 @@ def pipline(save_step: int):
     for f_path in feather_files:
         temp_df = pd.read_feather(f_path)
         dfs.append(temp_df)
+    
     val_chats_df = pd.concat(dfs)
     val_chats_df.to_excel(os.path.join("data", "results", "ai_validated_chats.xlsx"), index=False)
+    
+    # удаляем feather файлы
+    for f_path in feather_files:
+        os.remove(f_path)
 
     logging.info("Обработка данных завершена.")
 
