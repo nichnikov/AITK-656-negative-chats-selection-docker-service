@@ -55,7 +55,7 @@ def pipline(save_step: int):
     keys = data_processor.dict_of_chats.keys()
     keys_chanks = chunks(list(keys), save_step)
 
-    feather_files = []
+    feather_pathes = []
     for num, keys_chank in enumerate(keys_chanks):
 
         chank_results = []
@@ -71,13 +71,13 @@ def pipline(save_step: int):
 
         # Сохранение результатов в feather файл
         output_path = os.path.join("data", "results", out_fn)
-        feather_files.append(output_path)
-        chank_results_df.to_feather(output_path, index=False)
+        feather_pathes.append(output_path)
+        chank_results_df.to_feather(output_path)
         logging.info(f"Результаты сохранены в файл: {output_path}")
 
     # Соберем все провалидированные чаты в один файл
     dfs = []
-    for f_path in feather_files:
+    for f_path in feather_pathes:
         temp_df = pd.read_feather(f_path)
         dfs.append(temp_df)
     
@@ -85,10 +85,10 @@ def pipline(save_step: int):
     val_chats_df.to_excel(os.path.join("data", "results", "ai_validated_chats.xlsx"), index=False)
     
     # удаляем feather файлы
-    for f_path in feather_files:
+    for f_path in feather_pathes:
         os.remove(f_path)
 
     logging.info("Обработка данных завершена.")
 
 if __name__ == "__main__":
-    pipline(20)
+    pipline(10)
