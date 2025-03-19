@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import json
 import logging
 import pandas as pd
@@ -7,13 +8,16 @@ from collections import namedtuple
 from itertools import groupby
 from operator import itemgetter
 
+current_file_path = os.path.abspath(__file__)
+project_root = os.path.dirname(os.path.dirname(current_file_path))
+sys.path.append(project_root)
+
+from utils.utils import chunks
+
 # Настройка логирования
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def chunks(lst, n):
-    """Yield successive n-sized chunks from lst."""
-    for i in range(0, len(lst), n):
-        yield lst[i: i + n]
+
 
 
 # Класс для обработки данных чата
@@ -114,7 +118,7 @@ class ChatDataProcessor:
         self.classify_authors()
         self.group_messages()
 
-    
+
 
 # Пример использования класса
 if __name__ == "__main__":
