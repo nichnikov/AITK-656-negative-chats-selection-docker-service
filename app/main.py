@@ -31,7 +31,7 @@ def dialogue_validate(chat_dict: list[dict]):
         is_valid = validator(dialogue)
         logging.info(f"Результат валидации для диалога: {is_valid}")
     except RateLimitError:
-        logging.error(f"Результат валидации для диалога: {is_valid}")
+        logging.error(f"Результат валидации для диалога Rate-limit error")
         is_valid = "Rate-limit error"
 
     return dialogue, is_valid
@@ -49,7 +49,7 @@ def pipline(save_step: int):
     # Инициализация процессора данных
     data_processor.pipline()
     
-    data_processor.save_grouped_data_table(output_path = os.path.join("data", "results"), how="xlsx")
+    data_processor.save_grouped_data_table(out_dir=os.path.join("data", "results"), how="xlsx")
     logging.info(f"Все чаты сохранены в Ексель файл")
 
     keys = data_processor.dict_of_chats.keys()
@@ -91,4 +91,4 @@ def pipline(save_step: int):
     logging.info("Обработка данных завершена.")
 
 if __name__ == "__main__":
-    pipline(10)
+    pipline(20)

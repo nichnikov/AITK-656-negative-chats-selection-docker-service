@@ -3,3 +3,4 @@ openpyxl
 dotenv
 openai
 pydantic-settings
+pyarrow
