@@ -32,6 +32,6 @@ if __name__ == "__main__":
         val = validator(dialogue)
         print(dialogue)
         print(val)
-        if k > 20:
+        if k > 10:
             break
         k += 1

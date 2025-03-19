@@ -1,7 +1,8 @@
 import os
 import sys
-import pandas as pd
 import logging
+from openai import RateLimitError
+import pandas as pd
 
 # Настройка логгирования
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -26,10 +27,13 @@ def dialogue_validate(chat_dict: list[dict]):
     
     dialogue = "\n\t".join([str(d["Autor"]) + ": " + str(d["Phrase"]) for d in chat_dict])
     logging.debug(f"Сформированный диалог: {dialogue}")
-    
-    is_valid = validator(dialogue)
-    logging.info(f"Результат валидации для диалога: {is_valid}")
-    
+    try:    
+        is_valid = validator(dialogue)
+        logging.info(f"Результат валидации для диалога: {is_valid}")
+    except RateLimitError:
+        logging.error(f"Результат валидации для диалога: {is_valid}")
+        is_valid = "Rate-limit error"
+
     return dialogue, is_valid
 
 def pipline(save_step: int):
@@ -43,14 +47,13 @@ def pipline(save_step: int):
     logging.info("Запуск обработки данных...")
     
     # Инициализация процессора данных
-    data_processor()
+    data_processor.pipline()
     
     keys = data_processor.dict_of_chats.keys()
     keys_chanks = chunks(list(keys), save_step)
 
     for num, keys_chank in enumerate(keys_chanks):
-        logging.info(f"Обработка чанка {num + 1}/{len(keys_chanks)}...")
-        
+
         chank_results = []
 
         for i in keys_chank:
@@ -70,4 +73,4 @@ def pipline(save_step: int):
     logging.info("Обработка данных завершена.")
 
 if __name__ == "__main__":
-    pipline(100)
+    pipline(10)
