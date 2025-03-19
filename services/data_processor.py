@@ -97,7 +97,7 @@ class ChatDataProcessor:
             out_path_df = os.path.join(out_dir, "grouped_chats.xlsx")
             grouped_chats_df.drop("Timestamp", axis=1).to_excel(out_path_df, index=False)
     
-    def save_grouped_data_json_splited(self, out_dir, chank_size):
+    def save_grouped_data_jsons(self, out_dir, chank_size):
         keys = self.dict_of_chats.keys()
         keys_chunks = chunks(list(keys), chank_size)
         
@@ -108,6 +108,13 @@ class ChatDataProcessor:
             with open(out_path_json, "w") as f:
                 json.dump(temp_dict, f, ensure_ascii=False)
                 logging.info(f"Группированные данные сохранены в {out_path_json}.")
+    
+    def pipline(self, what="save", **kwads):
+        self.load_data()
+        self.classify_authors()
+        self.group_messages()
+
+    
 
 # Пример использования класса
 if __name__ == "__main__":
@@ -115,4 +122,11 @@ if __name__ == "__main__":
     processor.load_data()
     processor.classify_authors()
     processor.group_messages()
-    processor.save_grouped_data_table("data", "xlsx")
+    processor.save_grouped_data_jsons(os.path.join("data", "jsons"), 100)
+
+    k = 1
+    for i in processor.dict_of_chats:
+        print(processor.dict_of_chats[i])
+        if k > 5:
+            break
+        k += 1
