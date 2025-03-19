@@ -49,9 +49,13 @@ def pipline(save_step: int):
     # Инициализация процессора данных
     data_processor.pipline()
     
+    data_processor.save_grouped_data_table(output_path = os.path.join("data", "results"), how="xlsx")
+    logging.info(f"Все чаты сохранены в Ексель файл")
+
     keys = data_processor.dict_of_chats.keys()
     keys_chanks = chunks(list(keys), save_step)
 
+    feather_files = []
     for num, keys_chank in enumerate(keys_chanks):
 
         chank_results = []
@@ -62,13 +66,22 @@ def pipline(save_step: int):
                                   "dialogue": dialogue,
                                   "gpt_val": val})
 
-        out_fn = "ai_validate" + str(num) + ".xlsx"
+        out_fn = "ai_validate" + str(num) + ".feather"
         chank_results_df = pd.DataFrame(chank_results)
 
-        # Сохранение результатов в Excel файл
+        # Сохранение результатов в feather файл
         output_path = os.path.join("data", "results", out_fn)
-        chank_results_df.to_excel(output_path, index=False)
+        feather_files.append(output_path)
+        chank_results_df.to_feather(output_path, index=False)
         logging.info(f"Результаты сохранены в файл: {output_path}")
+
+    # Соберем все провалидированные чаты в один файл
+    dfs = []
+    for f_path in feather_files:
+        temp_df = pd.read_feather(f_path)
+        dfs.append(temp_df)
+    val_chats_df = pd.concat(dfs)
+    val_chats_df.to_excel(os.path.join("data", "results", "ai_validated_chats.xlsx"), index=False)
 
     logging.info("Обработка данных завершена.")
 
