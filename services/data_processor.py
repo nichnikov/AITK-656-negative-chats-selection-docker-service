@@ -32,7 +32,7 @@ class ChatDataProcessor:
         """Загружает данные из файла, поддерживает feather и csv форматы."""
         file_extension = os.path.splitext(self.file_path)[1]
         
-        assert file_extension in [".csv", "feather"]
+        assert file_extension in [".csv", ".feather"]
         
         if file_extension == '.feather':
             self.data_df = pd.read_feather(self.file_path)
