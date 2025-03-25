@@ -14,7 +14,7 @@ sys.path.append(project_root)
 
 # Импорт необходимых модулей
 from utils.utils import chunks
-from app.dependencies import validator, data_processor
+from app.dependencies import validator, data_processor, parameters
 
 def dialogue_validate(chat_dict: list[dict]):
     """
@@ -91,4 +91,4 @@ def pipline(save_step: int):
     logging.info("Обработка данных завершена.")
 
 if __name__ == "__main__":
-    pipline(10)
+    pipline(parameters.save_step)

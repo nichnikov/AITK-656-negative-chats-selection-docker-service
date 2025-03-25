@@ -17,3 +17,4 @@ class Parameters(BaseModel):
     max_tokens: int = 3000
     temperature: float = 0.2
     data_file_name: str = ""
+    save_step: int = 100
