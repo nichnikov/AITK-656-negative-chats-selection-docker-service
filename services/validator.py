@@ -27,15 +27,17 @@ class GPT_Validator:
 
         messages = []
         messages.append({"role": "user", "content": prompt})
-
-        response_big = self.client.chat.completions.create(
-            model="openai/gpt-4o-mini", # id модели из списка моделей - можно использовать OpenAI, Anthropic и пр. меняя только этот параметр openai/gpt-4o-mini
-            messages=messages,
-            temperature=self.prmts.temperature,
-            n=1,
-            max_tokens=self.prmts.max_tokens, # максимальное число ВЫХОДНЫХ токенов. Для большинства моделей не должно превышать 4096
-            extra_headers={ "X-Title": "My App" }, # опционально - передача информация об источнике API-вызова
-        )
+        try:
+            response_big = self.client.chat.completions.create(
+                model="openai/gpt-4o-mini", # id модели из списка моделей - можно использовать OpenAI, Anthropic и пр. меняя только этот параметр openai/gpt-4o-mini
+                messages=messages,
+                temperature=self.prmts.temperature,
+                n=1,
+                max_tokens=self.prmts.max_tokens, # максимальное число ВЫХОДНЫХ токенов. Для большинства моделей не должно превышать 4096
+                extra_headers={ "X-Title": "My App" }, # опционально - передача информация об источнике API-вызова
+            )
+        except:
+            pass
 
         #print("Response BIG:",response_big)
         return response_big.choices[0].message.content
