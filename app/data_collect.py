@@ -7,6 +7,10 @@ import pandas as pd
 current_file_path = os.path.abspath(__file__)
 project_root = os.path.dirname(os.path.dirname(current_file_path))
 
+data_pth =os.path.join(project_root, "data", "chats_2025week11.feather")
+data_df = pd.read_feather(data_pth)
+
+print(data_df)
 
 pth =os.path.join(project_root, "data", "results")
 print(pth)
@@ -32,8 +36,15 @@ for fn in file_names_2:
     df = pd.read_feather(f_path)
     dfs.append(df)
 
-df_all = pd.concat(dfs, axis=0)
-print(df_all)
+tested_df = pd.concat(dfs, axis=0)
+print(tested_df)
 
+not_tested_df = data_df[~data_df["chat_id"].isin(tested_df["chat_id"])]
+print(not_tested_df)
+
+# [242913 rows x 15 columns]
+
+# tested_df.to_feather(os.path.join(pth_out, "tested_results.feather"))
 pth_out =os.path.join(project_root, "data")
-df_all.to_feather(os.path.join(pth_out, "tested_results.feather"))
+not_tested_df.to_feather(os.path.join(pth_out, "not_tested.feather"))
+print(not_tested_df.info())
