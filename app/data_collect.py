@@ -44,7 +44,9 @@ print(not_tested_df)
 
 # [242913 rows x 15 columns]
 
-# tested_df.to_feather(os.path.join(pth_out, "tested_results.feather"))
+
 pth_out =os.path.join(project_root, "data")
-not_tested_df.to_feather(os.path.join(pth_out, "not_tested.feather"))
+tested_df.to_feather(os.path.join(pth_out, "tested_results.feather"))
+
+not_tested_df.to_feather(os.path.join(pth_out, "not_tested_2.feather"))
 print(not_tested_df.info())
