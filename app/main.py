@@ -1,7 +1,7 @@
 import os
 import sys
 import logging
-from openai import RateLimitError
+from openai import RateLimitError, APIConnectionError
 import pandas as pd
 
 # Настройка логгирования
@@ -61,10 +61,13 @@ def pipline(save_step: int):
         chank_results = []
 
         for i in keys_chank:
-            dialogue, val = dialogue_validate(data_processor.dict_of_chats[i])
-            chank_results.append({"chat_id": i, 
-                                  "dialogue": dialogue,
-                                  "gpt_val": val})
+            try:
+                dialogue, val = dialogue_validate(data_processor.dict_of_chats[i])
+                chank_results.append({"chat_id": i, 
+                                    "dialogue": dialogue,
+                                    "gpt_val": val})
+            except APIConnectionError:
+                logging.error("API Connection Error")
 
         out_fn = "ai_validate" + str(num) + ".feather"
         chank_results_df = pd.DataFrame(chank_results)
