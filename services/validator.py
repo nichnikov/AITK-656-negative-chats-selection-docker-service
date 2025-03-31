@@ -36,11 +36,13 @@ class GPT_Validator:
                 max_tokens=self.prmts.max_tokens, # максимальное число ВЫХОДНЫХ токенов. Для большинства моделей не должно превышать 4096
                 extra_headers={ "X-Title": "My App" }, # опционально - передача информация об источнике API-вызова
             )
+            answer = response_big.choices[0].message.content
         except:
-            pass
+            logging.error("Не удалось получить ответ от LLM API")
+            answer = "1.Нет\n2.Нет"
 
         #print("Response BIG:",response_big)
-        return response_big.choices[0].message.content
+        return answer
 
     def __call__(self, d: str):
         return self.gpt_validation(d)
