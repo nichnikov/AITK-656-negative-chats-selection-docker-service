@@ -13,9 +13,12 @@ df = pd.read_csv(os.path.join(in_pth, "chats_2025week12.csv"))
 print(df)
 print(df.info())
 
+'''
 work_columns = ["id", "chat_id", "created", "text", "discriminator", "operator_id", "user_id", "evaluation", 
  "c_ts_ms", "u_ts_ms", "search_vector", "template_id", "algorithm", "etalon_text", "score"]
+'''
 
+work_columns = ["chat_id", "created", "text", "discriminator"]
 df[work_columns].to_feather(os.path.join(in_pth, "chats_2025week12.feather"))
 
 
