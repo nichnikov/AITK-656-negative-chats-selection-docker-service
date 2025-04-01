@@ -174,4 +174,5 @@ cython_debug/
 .pypirc
 
 data/results_arhive
+data/2025w12_data
 
