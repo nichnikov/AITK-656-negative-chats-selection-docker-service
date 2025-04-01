@@ -46,7 +46,8 @@ print(not_tested_df)
 
 
 pth_out =os.path.join(project_root, "data", "2025w11_data")
-tested_df.to_feather(os.path.join(pth_out, "tested_results_250331_3.feather"))
+tested_df.to_feather(os.path.join(pth_out, "tested_results_250331_4.feather"))
+print(tested_df.info())
 
-not_tested_df.to_feather(os.path.join(pth_out, "not_tested_250331_3.feather"))
+not_tested_df.to_feather(os.path.join(pth_out, "not_tested_250331_4.feather"))
 print(not_tested_df.info())
