@@ -19,7 +19,7 @@ with open(os.path.join("data", "parameters.json"), "r") as pf:
 settings = Settings()
 parameters = Parameters(**prmt_json)
 
-data_processor = ChatDataProcessor(os.path.join("data", parameters.data_file_name))
+data_processor = ChatDataProcessor(os.path.join("data", "2025w13_data", parameters.data_file_name))
 validator = GPT_Validator(settings, parameters)
 
 

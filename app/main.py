@@ -49,7 +49,8 @@ def pipline(save_step: int):
     # Инициализация процессора данных
     data_processor.pipline()
     
-    data_processor.save_grouped_data_table(out_dir=os.path.join("data", "results"), how="xlsx")
+    # data_processor.save_grouped_data_table(out_dir=os.path.join("data", "results"), how="xlsx")
+    data_processor.save_grouped_data_table(out_dir=os.path.join("data", "results"), how="csv")
     logging.info(f"Все чаты сохранены в Ексель файл")
 
     keys = data_processor.dict_of_chats.keys()

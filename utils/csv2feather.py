@@ -8,8 +8,8 @@ project_root = os.path.dirname(os.path.dirname(current_file_path))
 
 
 # Предварительная подготовка
-in_pth = os.path.join(project_root, "data", "2025w12_data")
-df = pd.read_csv(os.path.join(in_pth, "chats_2025week12.csv"))
+in_pth = os.path.join(project_root, "data", "2025w13_data")
+df = pd.read_csv(os.path.join(in_pth, "chats_2025week13.csv"))
 print(df)
 print(df.info())
 
@@ -19,7 +19,7 @@ work_columns = ["id", "chat_id", "created", "text", "discriminator", "operator_i
 '''
 
 work_columns = ["chat_id", "created", "text", "discriminator"]
-df[work_columns].to_feather(os.path.join(in_pth, "chats_2025week12.feather"))
+df[work_columns].to_feather(os.path.join(in_pth, "chats_2025week13.feather"))
 
 
 '''
