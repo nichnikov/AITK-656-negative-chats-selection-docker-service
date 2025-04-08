@@ -176,4 +176,5 @@ cython_debug/
 data/results_arhive
 data/2025w12_data
 data/2025w13_data
+data/results/
 
