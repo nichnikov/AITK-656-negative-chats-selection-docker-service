@@ -12,7 +12,7 @@ from services.validator import GPT_Validator
 from services.data_processor import ChatDataProcessor
 
 
-with open(os.path.join("data", "parameters.json"), "r") as pf:
+with open(os.path.join("data", "parameters_new.json"), "r") as pf:
     prmt_json = json.load(pf)
 
 
