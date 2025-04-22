@@ -86,7 +86,7 @@ def pipline(save_step: int):
         dfs.append(temp_df)
     
     val_chats_df = pd.concat(dfs)
-    val_chats_df.to_excel(os.path.join("data", "results", "ai_validated_chats.xlsx"), index=False)
+    val_chats_df.to_excel(os.path.join("data", "results", "20250407_for_new_prompt_testing", "ai_20250407_chats_new_prompt.xlsx"), index=False)
     
     # удаляем feather файлы
     for f_path in feather_pathes:

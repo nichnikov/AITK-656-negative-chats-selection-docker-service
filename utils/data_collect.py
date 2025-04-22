@@ -6,12 +6,12 @@ import pandas as pd
 
 current_file_path = os.path.abspath(__file__)
 project_root = os.path.dirname(os.path.dirname(current_file_path))
-
+'''
 data_pth =os.path.join(project_root, "data", "2025w13_data", "chats_2025week13.feather")
 data_df = pd.read_feather(data_pth)
 
 print(data_df)
-
+'''
 pth =os.path.join(project_root, "data",  "results", "2025w13_test_new_prompt")
 print("2025w13_results PATH:", pth)
 
@@ -42,16 +42,20 @@ for fn in file_names_2:
 tested_df = pd.concat(dfs, axis=0)
 print("tested_df:\n", tested_df)
 
+'''
 not_tested_df = data_df[~data_df["chat_id"].isin(tested_df["chat_id"])]
 print("not_tested_df:\n", not_tested_df)
-
+'''
 # [242913 rows x 15 columns]
 
 
 pth_out =os.path.join(project_root, "data", "results", "2025w13_test_new_prompt")
-tested_df.to_feather(os.path.join(pth_out, "tested_results_250413_test.feather"))
-tested_df.to_csv(os.path.join(pth_out, "all_tested_w13_250413_test.csv"), sep="\t", index=False)
+# tested_df.to_feather(os.path.join(pth_out, "tested_results_250413_test.feather"))
+# tested_df.to_csv(os.path.join(pth_out, "all_tested_w13_250413_test.csv"), sep="\t", index=False)
+tested_df.to_excel(os.path.join(pth_out, "all_tested_250413_test_new_prompt.xlsx"), index=False)
 print(tested_df.info())
 
+'''
 not_tested_df.to_feather(os.path.join(pth_out, "not_tested_250414_1.feather"))
 print(not_tested_df.info())
+'''

@@ -43,9 +43,9 @@ class ChatDataProcessor:
         else:
             logging.error("Формат файла не поддерживается. Поддерживаются только .feather и .csv форматы.")
             raise ValueError("Формат файла не поддерживается. Поддерживаются только .feather и .csv форматы.")
-        self._clean_columns()
+        self._clean_data()
 
-    def _clean_columns(self):
+    def _clean_data(self):
         """Очищает названия колонок и содержимое от нежелательных символов."""
         for cl in self.data_df.columns:
             clear_cn = re.sub(r"\s+", "", cl)
@@ -56,6 +56,7 @@ class ChatDataProcessor:
             self.data_df[col] = self.data_df[col].apply(lambda x: patterns.sub(" ", str(x)))
 
         self.data_df["created"] = pd.to_datetime(self.data_df["created"])
+        self.data_df["discriminator"] = self.data_df["discriminator"].apply(lambda x: re.sub(" ", "", str(x)))
         logging.info("Колонки данных очищены и обновлены.")
 
     def classify_authors(self):
